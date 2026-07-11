@@ -222,11 +222,12 @@ def agregar_prenda(codigo, nombre, categoria, talla, color, material, es_unisex,
                 break
         
         while True:
-            es_unisex = input('Favor indique si la prenda es unisex. Ingrese "s" para si y "n" para no: ' )
+            validar_es_unisex = input('Favor indique si la prenda es unisex. Ingrese "s" para si y "n" para no: ' )
             
-            if not validar_opcion_unisex(es_unisex):
+            if validar_opcion_unisex not in ("S", "N"):
                     print('Error al ingresar condición de receta. Favor ingrese de nuevo')
             else:
+                es_unisex = validar_opcion_unisex(validar_es_unisex)
                 break
             
         while True:
