@@ -128,8 +128,6 @@ def busqueda_precio(p_min, p_max, d_prendas, d_bodega):
         for codigo in d_bodega:
             if d_bodega[codigo][0] >= p_min and d_bodega[codigo][0] <= p_max:
                 print(f'Prenda: {d_prendas[codigo][0]}')
-            else:
-                print('No existen prendas dentro de ese rango.')
         return
         
     except ValueError as error:
@@ -224,8 +222,8 @@ def agregar_prenda(codigo, nombre, categoria, talla, color, material, es_unisex,
         while True:
             validar_es_unisex = input('Favor indique si la prenda es unisex. Ingrese "s" para si y "n" para no: ' )
             
-            if validar_opcion_unisex not in ("S", "N"):
-                    print('Error al ingresar condición de receta. Favor ingrese de nuevo')
+            if validar_es_unisex.strip().upper() not in ("S", "N"):
+                    print('Error al indicar si es unisex. Favor ingrese de nuevo')
             else:
                 es_unisex = validar_opcion_unisex(validar_es_unisex)
                 break
@@ -272,6 +270,15 @@ def agregar_prenda(codigo, nombre, categoria, talla, color, material, es_unisex,
 ############ FIN CONTROLLERS ###############
 
 def main():
+    def leer_opcion():
+        try:
+            if opMenu is None or (opMenu < 1 or opMenu > len(menu)):
+                return False
+            else:
+                return True
+        except ValueError as error:
+            print(f'Error al ingresar opción. Error: {error}')
+
     try:
         prendas = {
             'S001': ['Polera Basica', 'polera', 'M', 'negro', 'algodon',
@@ -288,18 +295,13 @@ def main():
         bodega = {}
         menu = ['Unidades por categoría', 'Búsqueda de prendas por rango de precio', 'Actualizar precio de prenda', 'Agregar prenda', 'Eliminar prenda', 'Salir']
         opMenu = 0
-        
+
         while opMenu != 6:
             mostrar_menu(menu)
             opMenu = int(input('Favor elija una de las opciones para continuar: '))
             
-            def leer_menu():
-                if opMenu is None or (opMenu < 1 or opMenu > len(menu)):
-                    return False
-                else:
-                    return True
             
-            if not leer_menu(): 
+            if not leer_opcion(): 
                 print('La opción ingresada no coincide con nuestro sistema. Favor intente de nuevo.')
             
             else:
